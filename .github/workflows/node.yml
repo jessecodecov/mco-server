@@ -18,25 +18,24 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [16.x, 18.x]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
-      - run: npm run build --if-exists
       - run: npm test
       - name: Codecov
         run: |
-            curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --import
-            curl -Os https://uploader.codecov.io/latest/codecov-linux
-            curl -Os https://uploader.codecov.io/latest/codecov-linux.SHA256SUM
-            curl -Os https://uploader.codecov.io/latest/codecov-linux.SHA256SUM.sig
-            gpg --verify codecov-linux.SHA256SUM.sig codecov-linux.SHA256SUM
-            shasum -a 256 -c codecov-linux.SHA256SUM
-            chmod +x codecov-linux
-            ./codecov-linux -t 18362b60-86ca-4be2-a8cb-2bc94f4f0bd2 -F admin
-            ./codecov-linux -t 18362b60-86ca-4be2-a8cb-2bc94f4f0bd2 -F everything-else
+          curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --import
+          curl -Os https://uploader.codecov.io/latest/codecov-linux
+          curl -Os https://uploader.codecov.io/latest/codecov-linux.SHA256SUM
+          curl -Os https://uploader.codecov.io/latest/codecov-linux.SHA256SUM.sig
+          gpg --verify codecov-linux.SHA256SUM.sig codecov-linux.SHA256SUM
+          shasum -a 256 -c codecov-linux.SHA256SUM
+          chmod +x codecov-linux
+          ./codecov-linux -t 18362b60-86ca-4be2-a8cb-2bc94f4f0bd2 -F admin
+          ./codecov-linux -t 18362b60-86ca-4be2-a8cb-2bc94f4f0bd2 -F everything-else
