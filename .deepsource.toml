@@ -3,3 +3,4 @@ version = 1
 [[analyzers]]
 name = "test-coverage"
 enabled = true
+file-value="coverage/cobertura-coverage.xml"
